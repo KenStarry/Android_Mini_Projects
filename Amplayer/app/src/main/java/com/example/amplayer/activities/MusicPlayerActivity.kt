@@ -1,12 +1,12 @@
-package com.example.amplayer
+package com.example.amplayer.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.amplayer.R
 
-class MainActivity : AppCompatActivity() {
-
+class MusicPlayerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_music_player)
     }
 }
