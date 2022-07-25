@@ -4,12 +4,15 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import com.example.amplayer.R
 import com.example.amplayer.models.SongsModel
 import com.example.amplayer.singletons.MyMediaPlayer
+import com.example.amplayer.utility.QuerySongs
 import java.util.ArrayList
 import java.util.concurrent.TimeUnit
 
@@ -26,6 +29,7 @@ class MusicPlayerActivity : AppCompatActivity(), Runnable {
 
     private var songsModelArrayList: ArrayList<SongsModel>? = null
     private var currentSongModel: SongsModel? = null
+    private var currentSongPosition: Int? = null
     private var mediaPlayer: MediaPlayer? = MyMediaPlayer().getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,27 +45,53 @@ class MusicPlayerActivity : AppCompatActivity(), Runnable {
         nextBtn = findViewById(R.id.next)
         prevBtn = findViewById(R.id.prev)
         musicIcon = findViewById(R.id.playSongImage)
+//        currentSongModel = intent.getSerializableExtra("CURR_SONG_MODEL") as SongsModel?
+        currentSongPosition = intent.getIntExtra("POSITION", 0)
+        songsModelArrayList = QuerySongs(this).queryMusic()
 
-        setResourcesWithCurrentMusic()
+        setResourcesWithCurrentMusic(currentSongPosition!!)
 
-        this@MusicPlayerActivity.runOnUiThread {
+        Thread(Runnable {
 
-            if (mediaPlayer != null) {
-                seekbar?.progress = mediaPlayer?.currentPosition!!
-                currentTime?.text = convertToMMSS(mediaPlayer?.currentPosition!!.toString())
+            runOnUiThread {
+                if (mediaPlayer != null) {
+                    seekbar?.progress = mediaPlayer?.currentPosition!!
+                    currentTime?.text = convertToMMSS(mediaPlayer?.currentPosition!!.toString())
+
+                    if (mediaPlayer?.isPlaying!!) {
+                        pausePlay?.setImageResource(R.drawable.ic_pause_circle)
+                    } else
+                        pausePlay?.setImageResource(R.drawable.ic_play_circle)
+                } else
+                    Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show()
             }
-        }
+
+            Thread.sleep(100)
+        }).start()
+
+        seekbar?.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekbar: SeekBar?, progress: Int, dragged: Boolean) {
+                if (mediaPlayer != null && dragged) {
+                    mediaPlayer?.seekTo(progress)
+                }
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+            }
+
+        })
     }
 
-    private fun setResourcesWithCurrentMusic() {
+    private fun setResourcesWithCurrentMusic(pos: Int) {
 
-        currentSongModel = intent.getSerializableExtra("CURR_SONG_MODEL") as SongsModel?
-//        songsModelArrayList = intent.getSerializableExtra("SONGS_ARRAYLIST") as ArrayList<SongsModel>
-
-        songTitle?.text = currentSongModel?.songTitle
+        songTitle?.text = songsModelArrayList!![pos].songTitle
         //  For marquee effect
         songTitle?.isSelected = true
-        totalTime?.text = convertToMMSS(currentSongModel?.songDuration)
+        totalTime?.text = convertToMMSS(songsModelArrayList!![pos].songDuration)
 
         pausePlay?.setOnClickListener { pausePlay() }
         nextBtn?.setOnClickListener { playNextSong() }
@@ -75,7 +105,7 @@ class MusicPlayerActivity : AppCompatActivity(), Runnable {
 
         //  reset the media player
         mediaPlayer?.reset()
-        mediaPlayer?.setDataSource(currentSongModel?.songPath)
+        mediaPlayer?.setDataSource(songsModelArrayList!![currentSongPosition!!].songPath)
         mediaPlayer?.prepare()
         mediaPlayer?.start()
 
@@ -84,25 +114,25 @@ class MusicPlayerActivity : AppCompatActivity(), Runnable {
         seekbar?.max = mediaPlayer?.duration!!
     }
 
-    fun playNextSong() {
+    private fun playNextSong() {
 
-        if (MyMediaPlayer().currentIndex ==  1)
+        if (currentSongPosition ==  1)
             return
 
-        MyMediaPlayer().currentIndex += 1
+        currentSongPosition = currentSongPosition?.plus(1)
         mediaPlayer?.reset()
-        setResourcesWithCurrentMusic()
+        setResourcesWithCurrentMusic(currentSongPosition!!)
 
     }
 
-    fun playPreviousSong() {
+    private fun playPreviousSong() {
 
-        if (MyMediaPlayer().currentIndex == 0)
+        if (currentSongPosition == 0)
             return
 
-        MyMediaPlayer().currentIndex -= 1
+        currentSongPosition = currentSongPosition?.minus(1)
         mediaPlayer?.reset()
-        setResourcesWithCurrentMusic()
+        setResourcesWithCurrentMusic(currentSongPosition!!)
 
     }
 
