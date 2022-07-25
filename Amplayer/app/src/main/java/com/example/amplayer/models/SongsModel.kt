@@ -1,10 +1,12 @@
 package com.example.amplayer.models
 
+import android.os.Parcelable
+import java.io.Serializable
+
 class SongsModel(
-    val songPath: String?,
-    val songTitle: String?,
-    val songDuration: String?,
-    val songArtist: String?,
-    val songAlbum: String?
-) {
-}
+    var songPath: String?,
+    var songTitle: String?,
+    var songDuration: String?,
+    var songArtist: String?,
+    var songAlbum: String?
+) : Serializable

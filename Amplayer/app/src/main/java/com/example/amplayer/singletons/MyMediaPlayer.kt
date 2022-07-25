@@ -14,5 +14,5 @@ class MyMediaPlayer {
         return instance
     }
 
-    var currentIndex = -1
+    var currentIndex = 0
 }

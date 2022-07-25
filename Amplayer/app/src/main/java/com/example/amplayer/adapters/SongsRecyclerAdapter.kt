@@ -12,11 +12,12 @@ import com.example.amplayer.R
 import com.example.amplayer.activities.MusicPlayerActivity
 import com.example.amplayer.models.SongsModel
 import com.example.amplayer.singletons.MyMediaPlayer
+import java.io.Serializable
 import java.util.ArrayList
 
 class SongsRecyclerAdapter(
     private val context: Context,
-    private val songsArrayList: ArrayList<SongsModel>
+    val songsArrayList: ArrayList<SongsModel>?
 
 ) : RecyclerView.Adapter<SongsRecyclerAdapter.ViewHolder>() {
 
@@ -38,18 +39,21 @@ class SongsRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        MyMediaPlayer().getInstance()?.reset()
+        MyMediaPlayer().currentIndex = position
 
-        val model: SongsModel = songsArrayList[position]
+        val model: SongsModel = songsArrayList!![position]
 
         holder.songName.text = model.songTitle
 
         holder.itemView.setOnClickListener {
+            toast("Songs are ${songsArrayList.size} in number")
             //  Reset the media player
-            MyMediaPlayer().getInstance()?.reset()
-            MyMediaPlayer().currentIndex = position
 
-            val intent = Intent(context, MusicPlayerActivity::class.java)
-            intent.putExtra("LIST", songsArrayList)
+            val intent = Intent(context.applicationContext, MusicPlayerActivity::class.java)
+            intent.putExtra("CURR_SONG_MODEL", songsArrayList[MyMediaPlayer().currentIndex])
+            intent.putExtra("SONGS_ARRAYLIST", songsArrayList as Serializable)
+            intent.putExtra("POSITION", position)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
             context.startActivity(intent)
@@ -59,7 +63,7 @@ class SongsRecyclerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return songsArrayList.size
+        return songsArrayList!!.size
     }
 
     //  Miscellaneous Functions

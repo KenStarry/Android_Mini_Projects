@@ -76,7 +76,7 @@ class SongsActivity : AppCompatActivity() {
 
         while (cursor.moveToNext()) {
 
-            val model: SongsModel = SongsModel(
+            val model = SongsModel(
                 cursor.getString(1),
                 cursor.getString(0),
                 cursor.getString(2),
@@ -86,7 +86,7 @@ class SongsActivity : AppCompatActivity() {
 
             //  If the song path exists, we can add it
             if (File(model.songPath).exists())
-                songsArrayList?.add(model)
+                songsArrayList!!.add(model)
         }
 
         //  If no songs have been found,
