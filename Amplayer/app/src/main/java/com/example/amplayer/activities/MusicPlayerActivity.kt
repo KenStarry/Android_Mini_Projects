@@ -56,7 +56,7 @@ class MusicPlayerActivity : AppCompatActivity(), Runnable {
     private fun setResourcesWithCurrentMusic() {
 
         currentSongModel = intent.getSerializableExtra("CURR_SONG_MODEL") as SongsModel?
-        songsModelArrayList = intent.getSerializableExtra("SONGS_ARRAYLIST") as ArrayList<SongsModel>
+//        songsModelArrayList = intent.getSerializableExtra("SONGS_ARRAYLIST") as ArrayList<SongsModel>
 
         songTitle?.text = currentSongModel?.songTitle
         //  For marquee effect
