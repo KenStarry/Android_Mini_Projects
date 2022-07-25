@@ -52,7 +52,7 @@ class SongsRecyclerAdapter(
 
             val intent = Intent(context.applicationContext, MusicPlayerActivity::class.java)
             intent.putExtra("CURR_SONG_MODEL", songsArrayList[MyMediaPlayer().currentIndex])
-            intent.putExtra("SONGS_ARRAYLIST", songsArrayList as Serializable)
+            intent.putExtra("SONGS_ARRAYLIST", songsArrayList)
             intent.putExtra("POSITION", position)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
