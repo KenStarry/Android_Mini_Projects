@@ -14,12 +14,13 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class AddEditNoteActivity extends AppCompatActivity {
 
     //  Intent extras constants
     public static final String EXTRA_TITLE = "com.example.mvvmintro.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.example.mvvmintro.EXTRA_DESCRIPTION";
     public static final String EXTRA_PRIORITY = "com.example.mvvmintro.EXTRA_PRIORITY";
+    public static final String EXTRA_ID = "com.example.mvvmintro.EXTRA_ID";
 
     private EditText editTextTitle, editTextDesc;
     private NumberPicker numberPicker;

@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.mvvmintro.adapters.NoteAdapter;
 import com.example.mvvmintro.entities.Note;
+import com.example.mvvmintro.interfaces.OnItemClickListener;
 import com.example.mvvmintro.view_models.NoteViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,6 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final int ADD_NOTE_REQUEST = 1;
+    public static final int EDIT_NOTE_REQUEST = 1;
 
     private NoteViewModel noteViewModel;
 
@@ -48,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
                             Intent data = result.getData();
 
                             if (data != null) {
-                                String title_extra = data.getStringExtra(AddNoteActivity.EXTRA_TITLE);
-                                String desc_extra = data.getStringExtra(AddNoteActivity.EXTRA_DESCRIPTION);
-                                int priority_extra = data.getIntExtra(AddNoteActivity.EXTRA_PRIORITY, 0);
+                                String title_extra = data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
+                                String desc_extra = data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION);
+                                int priority_extra = data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 0);
 
                                 Note note = new Note(title_extra, desc_extra, priority_extra);
                                 noteViewModel.insert(note);
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
                 //  We use startActivity for result because we are only getting a result from our activity
                 intentActivityResultLauncher.launch(intent);
             }
@@ -110,6 +112,19 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Note deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Note note) {
+
+                //  now you can use this note that has been passed from the interface
+                Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
+
+                intent.putExtra(AddEditNoteActivity.EXTRA_TITLE, note.getTitle());
+                intent.putExtra(AddEditNoteActivity.EXTRA_DESCRIPTION, note.getDescription());
+                intent.putExtra(AddEditNoteActivity.EXTRA_PRIORITY, note.getPriority());
+            }
+        });
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mvvmintro.R;
 import com.example.mvvmintro.entities.Note;
+import com.example.mvvmintro.interfaces.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     private List<Note> notes = new ArrayList<>();
     private List<Note> selectedNotes = new ArrayList<>();
     private boolean isSelected = false;
+
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -37,11 +42,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), android.R.anim.slide_in_left);
+
         Note note_model = notes.get(position);
 
         holder.noteTitle.setText(note_model.getTitle());
         holder.noteDesc.setText(note_model.getDescription());
         holder.notePriority.setText(String.valueOf(note_model.getPriority()));
+
+        holder.itemView.startAnimation(animation);
     }
 
     @Override
@@ -85,7 +94,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                         itemView.setBackgroundColor(Color.TRANSPARENT);
                         selectedNotes.remove(notes.get(getAdapterPosition()));
 
-                    }  else {
+                    } else {
                         itemView.setBackgroundResource(R.color.teal_200);
                         selectedNotes.add(notes.get(getAdapterPosition()));
                     }
@@ -102,6 +111,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    //  Pass the interface
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION)
+                        listener.onItemClick(notes.get(position));
 
                     if (isSelected) {
 
@@ -128,5 +142,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 }
             });
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }
