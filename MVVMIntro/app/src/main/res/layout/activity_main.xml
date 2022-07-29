@@ -6,27 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/svg"
-            android:src="@drawable/undraw_not_found_5l0w"
-            android:visibility="visible"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/recyclerView"
-            tools:listitem="@layout/note_item"
-            android:visibility="gone"/>
-
-    </FrameLayout>
-
+        android:id="@+id/recyclerView"
+        tools:listitem="@layout/note_item"
+        android:layout_marginTop="30dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

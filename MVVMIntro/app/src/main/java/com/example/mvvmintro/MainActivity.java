@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        ImageView svg = findViewById(R.id.svg);
 
         NoteAdapter adapter = new NoteAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -112,16 +111,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Note> notes) {
                 //  Update our recycler view
-                adapter.setNotes(notes);
-
-                if (adapter.getItemCount() == 0) {
-                    svg.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.GONE);
-
-                } else {
-                    svg.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
+                adapter.submitList(notes);
             }
         });
 
