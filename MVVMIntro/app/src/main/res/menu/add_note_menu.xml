@@ -6,5 +6,5 @@
         android:id="@+id/saveMenu"
         android:title="Save"
         android:icon="@drawable/ic_save"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 </menu>

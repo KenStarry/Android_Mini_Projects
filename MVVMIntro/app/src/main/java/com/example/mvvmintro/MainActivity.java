@@ -50,14 +50,36 @@ public class MainActivity extends AppCompatActivity {
                             Intent data = result.getData();
 
                             if (data != null) {
-                                String title_extra = data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
-                                String desc_extra = data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION);
-                                int priority_extra = data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 0);
 
-                                Note note = new Note(title_extra, desc_extra, priority_extra);
-                                noteViewModel.insert(note);
+                                if (data.hasExtra(AddEditNoteActivity.EXTRA_ID)) {
 
-                                Toast.makeText(MainActivity.this, "note saved!", Toast.LENGTH_SHORT).show();
+                                    String title_extra = data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
+                                    String desc_extra = data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION);
+                                    int priority_extra = data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 0);
+                                    int id_extra = data.getIntExtra(AddEditNoteActivity.EXTRA_ID, -1);
+
+                                    if (id_extra == -1) {
+                                        Toast.makeText(MainActivity.this, "note couldn't be updated!", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    Note note = new Note(title_extra, desc_extra, priority_extra);
+                                    note.setId(id_extra);
+                                    noteViewModel.update(note);
+
+                                    Toast.makeText(MainActivity.this, "note updated!", Toast.LENGTH_SHORT).show();
+
+                                } else {
+
+                                    String title_extra = data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
+                                    String desc_extra = data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION);
+                                    int priority_extra = data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 0);
+
+                                    Note note = new Note(title_extra, desc_extra, priority_extra);
+                                    noteViewModel.insert(note);
+
+                                    Toast.makeText(MainActivity.this, "note saved!", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
                     }
@@ -120,9 +142,12 @@ public class MainActivity extends AppCompatActivity {
                 //  now you can use this note that has been passed from the interface
                 Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
 
+                intent.putExtra(AddEditNoteActivity.EXTRA_ID, note.getId());
                 intent.putExtra(AddEditNoteActivity.EXTRA_TITLE, note.getTitle());
                 intent.putExtra(AddEditNoteActivity.EXTRA_DESCRIPTION, note.getDescription());
                 intent.putExtra(AddEditNoteActivity.EXTRA_PRIORITY, note.getPriority());
+
+                intentActivityResultLauncher.launch(intent);
             }
         });
     }

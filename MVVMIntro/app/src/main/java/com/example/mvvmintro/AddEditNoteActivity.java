@@ -38,7 +38,17 @@ public class AddEditNoteActivity extends AppCompatActivity {
         numberPicker.setMaxValue(10);
 
         Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Note");
+
+        Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_ID)) {
+            setTitle("Edit Note");
+
+            editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
+            editTextDesc.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
+            numberPicker.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
+
+        } else
+            setTitle("Add Note");
     }
 
     private void saveNote() {
@@ -56,6 +66,12 @@ public class AddEditNoteActivity extends AppCompatActivity {
         data.putExtra(EXTRA_TITLE, title);
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_PRIORITY, priority);
+
+        //  The id to be used to update our note in the database
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1) {
+            data.putExtra(EXTRA_ID, id);
+        }
 
         //  Set the result as OK
         setResult(RESULT_OK, data);
@@ -79,7 +95,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
             case R.id.saveMenu:
                 saveNote();
                 return true;
-                
+
             default:
                 return super.onOptionsItemSelected(item);
         }
