@@ -1,8 +1,10 @@
 package com.example.mvvmintro.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,8 @@ import java.util.List;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     private List<Note> notes = new ArrayList<>();
+    private List<Note> selectedNotes = new ArrayList<>();
+    private boolean isSelected = false;
 
     @NonNull
     @Override
@@ -59,6 +63,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         private TextView noteTitle;
         private TextView noteDesc;
         private TextView notePriority;
+        private CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +71,62 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             noteTitle = itemView.findViewById(R.id.note_title);
             noteDesc = itemView.findViewById(R.id.note_desc);
             notePriority = itemView.findViewById(R.id.note_priority);
+            checkBox = itemView.findViewById(R.id.checkBox);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    isSelected = true;
+
+                    checkBox.setVisibility(View.VISIBLE);
+
+                    if (selectedNotes.contains(notes.get(getAdapterPosition()))) {
+                        itemView.setBackgroundColor(Color.TRANSPARENT);
+                        selectedNotes.remove(notes.get(getAdapterPosition()));
+
+                    }  else {
+                        itemView.setBackgroundResource(R.color.teal_200);
+                        selectedNotes.add(notes.get(getAdapterPosition()));
+                    }
+
+                    if (selectedNotes.size() == 0) {
+                        isSelected = false;
+                        checkBox.setVisibility(View.GONE);
+                    }
+
+                    return true;
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (isSelected) {
+
+                        checkBox.setVisibility(View.VISIBLE);
+
+                        if (selectedNotes.contains(notes.get(getAdapterPosition()))) {
+                            itemView.setBackgroundColor(Color.TRANSPARENT);
+                            selectedNotes.remove(notes.get(getAdapterPosition()));
+
+                            checkBox.setVisibility(View.GONE);
+
+                        } else {
+                            itemView.setBackgroundResource(R.color.teal_200);
+                            selectedNotes.add(notes.get(getAdapterPosition()));
+                        }
+
+                        if (selectedNotes.size() == 0) {
+                            isSelected = false;
+                            checkBox.setVisibility(View.GONE);
+                        }
+                    } else {
+
+                    }
+                }
+            });
         }
     }
 }
