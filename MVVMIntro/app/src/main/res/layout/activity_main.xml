@@ -8,13 +8,22 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/svg"
+            android:src="@drawable/undraw_not_found_5l0w"
+            android:visibility="visible"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recyclerView"
-            tools:listitem="@layout/note_item"/>
+            tools:listitem="@layout/note_item"
+            android:visibility="gone"/>
 
     </FrameLayout>
 

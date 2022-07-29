@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mvvmintro.adapters.NoteAdapter;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
                             if (data != null) {
 
+                                //  If we are editing the note or just making a new note
                                 if (data.hasExtra(AddEditNoteActivity.EXTRA_ID)) {
 
                                     String title_extra = data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
@@ -97,9 +99,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ImageView svg = findViewById(R.id.svg);
 
         NoteAdapter adapter = new NoteAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
         //  Ask Android for an existing viewModel
@@ -110,6 +113,15 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<Note> notes) {
                 //  Update our recycler view
                 adapter.setNotes(notes);
+
+                if (adapter.getItemCount() == 0) {
+                    svg.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+
+                } else {
+                    svg.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
         });
 
