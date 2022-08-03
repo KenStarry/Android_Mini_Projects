@@ -53,10 +53,10 @@ abstract class NoteDatabase : RoomDatabase() {
             val noteDao = db.noteDao()
 
             subscribeOnBackground {
-                noteDao.insert(Notes(1, "Go to the office", "Do some work", false))
-                noteDao.insert(Notes(2, "Talk to Sheilla", "Do some work", false))
-                noteDao.insert(Notes(3, "Verify some duties", "Do some work", false))
-                noteDao.insert(Notes(4, "Write some code", "Do some work", false))
+                noteDao.insert(Notes("Go to the office", "Do some work", false))
+                noteDao.insert(Notes("Talk to Sheilla", "Do some work", false))
+                noteDao.insert(Notes("Verify some duties", "Do some work", false))
+                noteDao.insert(Notes("Write some code", "Do some work", false))
             }
         }
     }

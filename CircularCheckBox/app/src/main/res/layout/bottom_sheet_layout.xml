@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp">
+    android:padding="8dp">
 
     <EditText
         android:layout_width="match_parent"
@@ -23,6 +23,6 @@
         app:tint="@color/accent"
         android:layout_below="@id/newTaskInput"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="16dp"/>
 
 </RelativeLayout>

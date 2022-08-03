@@ -6,12 +6,17 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "notes")
 class Notes(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
 
     @ColumnInfo(name = "note_title") val noteTitle: String?,
     @ColumnInfo(name = "note_description") val noteDescription: String?,
     @ColumnInfo(name = "note_checked") val noteChecked: Boolean
 
 ) {
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+        get() = field
+        set(value) {
+            field = value
+        }
 }
