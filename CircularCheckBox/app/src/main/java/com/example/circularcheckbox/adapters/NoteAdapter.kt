@@ -10,10 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.circularcheckbox.R
 import com.example.circularcheckbox.entities.Notes
 
-class NoteAdapter(
-    private val onItemClickListener: (Notes) -> Unit
-
-): ListAdapter<Notes, NoteAdapter.NoteHolder>(diffCallback) {
+class NoteAdapter: ListAdapter<Notes, NoteAdapter.NoteHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
 

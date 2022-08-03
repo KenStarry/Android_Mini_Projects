@@ -4,8 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/programyzilla/android/MiniProjos/CircularCheckBox/app/src/main/res/drawable/checkbox_selector.xml" value="0.1245" />
+        <entry key="..\:/programyzilla/android/MiniProjos/CircularCheckBox/app/src/main/res/drawable/ic_check_circle.xml" value="0.1245" />
+        <entry key="..\:/programyzilla/android/MiniProjos/CircularCheckBox/app/src/main/res/drawable/ic_unchecked.xml" value="0.1855" />
+        <entry key="..\:/programyzilla/android/MiniProjos/CircularCheckBox/app/src/main/res/drawable/rounded_dialog.xml" value="0.1245" />
         <entry key="..\:/programyzilla/android/MiniProjos/CircularCheckBox/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
-        <entry key="..\:/programyzilla/android/MiniProjos/CircularCheckBox/app/src/main/res/layout/todo_item.xml" value="0.2234375" />
+        <entry key="..\:/programyzilla/android/MiniProjos/CircularCheckBox/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.2234375" />
+        <entry key="..\:/programyzilla/android/MiniProjos/CircularCheckBox/app/src/main/res/layout/todo_item.xml" value="0.11797752808988764" />
       </map>
     </option>
   </component>

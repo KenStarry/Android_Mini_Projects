@@ -54,9 +54,9 @@ abstract class NoteDatabase : RoomDatabase() {
 
             subscribeOnBackground {
                 noteDao.insert(Notes(1, "Go to the office", "Do some work", false))
-                noteDao.insert(Notes(1, "Talk to Sheilla", "Do some work", false))
-                noteDao.insert(Notes(1, "Verify some duties", "Do some work", false))
-                noteDao.insert(Notes(1, "Write some code", "Do some work", false))
+                noteDao.insert(Notes(2, "Talk to Sheilla", "Do some work", false))
+                noteDao.insert(Notes(3, "Verify some duties", "Do some work", false))
+                noteDao.insert(Notes(4, "Write some code", "Do some work", false))
             }
         }
     }
