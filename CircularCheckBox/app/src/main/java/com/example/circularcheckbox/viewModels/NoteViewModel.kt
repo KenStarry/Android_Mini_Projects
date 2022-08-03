@@ -26,4 +26,8 @@ class NoteViewModel(application: Application): AndroidViewModel(application) {
     fun modelGetAllTasks(): LiveData<List<Notes>> {
         return allTasks
     }
+
+    fun modelGetAllCheckedTasks(status: Boolean): LiveData<List<Notes>> {
+        return repository.getAllCheckedTasks(status)
+    }
 }

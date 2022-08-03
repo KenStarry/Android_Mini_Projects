@@ -19,6 +19,9 @@ interface NoteDao {
     @Query("SELECT * FROM notes")
     fun getAllNotes(): LiveData<List<Notes>>
 
+    @Query("SELECT * FROM notes WHERE note_checked = :status")
+    fun getAllCheckedNotes(status: Boolean): LiveData<List<Notes>>
+
 }
 
 

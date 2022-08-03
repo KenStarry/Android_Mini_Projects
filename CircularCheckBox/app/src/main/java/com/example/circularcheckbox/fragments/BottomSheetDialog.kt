@@ -42,7 +42,7 @@ class BottomSheetDialog: BottomSheetDialogFragment() {
 
             if (inputTask.text.toString().trim() != "") {
 
-                vm.modelInsertTask(Notes(inputTask.text.toString().trim(), "Added a new task", false))
+                vm.modelInsertTask(Notes(inputTask.text.toString().trim(), "Added a new task", true))
 
                 vm.modelGetAllTasks().observe(requireActivity()) {
                     adapter.submitList(it)

@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: NoteViewModel
     private lateinit var adapter: NoteAdapter
+    private lateinit var adapterChecked: NoteAdapter
     private lateinit var fabBtn: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,10 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(it)
         })
 
+        viewModel.modelGetAllCheckedTasks(true).observe(this) {
+            adapterChecked.submitList(it)
+        }
+
         fabBtn = findViewById(R.id.fab)
         fabBtn.setOnClickListener {
 
@@ -41,10 +46,15 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        val recyclerViewChecked: RecyclerView = findViewById(R.id.recyclerViewChecked)
         adapter = NoteAdapter()
+        adapterChecked = NoteAdapter()
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        recyclerViewChecked.layoutManager = LinearLayoutManager(this)
+        recyclerViewChecked.adapter = adapterChecked
     }
 }
 

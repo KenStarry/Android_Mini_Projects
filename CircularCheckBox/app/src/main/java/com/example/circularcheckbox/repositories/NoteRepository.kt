@@ -39,6 +39,10 @@ class NoteRepository(application: Application) {
     fun getAllTasks(): LiveData<List<Notes>> {
         return allNotes
     }
+
+    fun getAllCheckedTasks(status: Boolean): LiveData<List<Notes>> {
+        return noteDao.getAllCheckedNotes(status)
+    }
 }
 
 
