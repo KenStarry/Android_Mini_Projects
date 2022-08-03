@@ -2,13 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
-    <TextView
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/newTaskInput"
+        android:background="@android:color/transparent"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:hint="Add a new task..."
+        android:inputType="textMultiLine"/>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello BottomSheetDialog"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"/>
+        android:id="@+id/sendBtn"
+        android:src="@drawable/ic_baseline_send_24"
+        app:tint="@color/accent"
+        android:layout_below="@id/newTaskInput"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>
