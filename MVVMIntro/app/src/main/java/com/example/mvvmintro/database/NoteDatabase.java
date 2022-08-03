@@ -13,15 +13,18 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.mvvmintro.data.NoteDao;
+import com.example.mvvmintro.data.TrashDao;
 import com.example.mvvmintro.entities.Note;
+import com.example.mvvmintro.entities.Trash;
 
-@Database(entities = {Note.class}, version = 1)
+@Database(entities = {Note.class, Trash.class}, version = 2)
 public abstract class NoteDatabase extends RoomDatabase {
 
     //  Singleton class
     private static NoteDatabase instance;
 
     public abstract NoteDao noteDao();
+    public abstract TrashDao trashDao();
 
     //  synchronized - you can only create one instance at a time
     public static synchronized NoteDatabase getInstance(Context context) {
@@ -53,10 +56,13 @@ public abstract class NoteDatabase extends RoomDatabase {
     public static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private NoteDao noteDao;
+        private TrashDao trashDao;
 
         private PopulateDbAsyncTask(NoteDatabase db) {
             noteDao = db.noteDao();
+            trashDao = db.trashDao();
         }
+
         @Override
         protected Void doInBackground(Void... voids) {
             noteDao.insert(new Note("The Wild", "This is part of the pixel perfect wild", 2));
