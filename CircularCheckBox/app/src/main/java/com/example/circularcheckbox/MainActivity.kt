@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         val recyclerViewChecked: RecyclerView = findViewById(R.id.recyclerViewChecked)
-        adapter = NoteAdapter()
-        adapterChecked = NoteAdapter()
+        adapter = NoteAdapter(this)
+        adapterChecked = NoteAdapter(this)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter

@@ -33,7 +33,7 @@ class BottomSheetDialog: BottomSheetDialogFragment() {
         showSoftKeyboard(view)
 
         vm = ViewModelProvider(requireActivity()).get(NoteViewModel::class.java)
-        adapter = NoteAdapter()
+        adapter = NoteAdapter(container!!.context)
 
         var inputTask: EditText = view.findViewById(R.id.newTaskInput)
         val saveBtn: ImageView = view.findViewById(R.id.sendBtn)
